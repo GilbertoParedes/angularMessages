@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -8,9 +9,34 @@ import { Component, OnInit } from '@angular/core';
 export class LoginComponent implements OnInit {
 
   operation: string = 'login';
-  constructor() { }
+  email: string = null;
+  password: string = null;
+
+  constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
+  }
+
+  register() {
+    this.authenticationService.registerWithEmail(this.email, this.password).then(
+      (data) => {
+        alert('regístrado correctamente');
+        console.log(data);
+      }).catch((error) => {
+        alert('Ocurrió un erorr');
+        console.log(error);
+      });
+  }
+
+  login() {
+    this.authenticationService.loginWithEmail(this.email, this.password).then(
+      (data) => {
+        alert('logeado correctamente');
+        console.log(data);
+      }).catch((error) => {
+        alert('Ocurrió un erorr');
+        console.log(error);
+      });
   }
 
 }
